@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from '@emotion/styled'
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Container, Grid, Paper, Typography, Badge } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { DateCalendar } from '@mui/x-date-pickers';
+import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
 
 const SuiteAndBTCGraphic = (
 <svg width="485" height="372" viewBox="0 0 485 372" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,8 +75,45 @@ const CustomDiv = styled.div`
 
 `;
 
+const isFirstWednesday = (dateStr) => {
+  // console.log(JSON.stringify(dateStr))
+  let date = new Date(dateStr);
+  return date.getDay() === 3 && date.getDate() <= 7;
+}
+
+const ServerDay = (props) => {
+  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+
+  const isSelected = !props.outsideCurrentMonth && isFirstWednesday(props.day.date());
+
+  return (
+    <Badge
+      key={props.day.toString()}
+      variant='dot'
+      color='secondary'
+      invisible={isSelected ? false : true}
+      overlap='circular'
+    >
+      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+    </Badge>
+  );
+}
+
+
+/*
+
+The goal of the calendar is to be able to click on dates and have a popup that shows our meetup details. 
+1. Perhaps the modal is actually seperate and is just passed the dates from a click event?
+*** 2. We also want to have the only badge be on the first wednesday of each month
+        - onMonthChange has been added. Need to get this info to the day components to render badge
+3. Also need to change colors
+
+*/
 
 const CalendarPage = () => {
+
+  const [highlightedDays, setHighlightedDays] = useState([11,20,9])
+
   return (
     <CustomDiv>
       <Container>
@@ -87,7 +124,17 @@ const CalendarPage = () => {
             </Box>
             <Box>
               <Paper>
-                <DateCalendar />
+                <DateCalendar 
+                  slots={{
+                    day: ServerDay
+                  }}
+                  onMonthChange={(month) => console.log(JSON.stringify(month))}
+                  slotProps={{
+                    day: {
+                      highlightedDays
+                    }
+                  }}
+                />
               </Paper>
             </Box>
             <Box>

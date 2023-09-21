@@ -20,10 +20,16 @@ const WheelSpinPage = () => {
 
   const [openSpinResult, setOpenSpinResult] = useState(false);
   const [winningIndex, setWinningIndex] = useState(0);
+  const [emailValue, setEmailValue] = useState("");
 
   const wheelRef = useRef();
 
+  const handleTextChange = (event) => {
+    setEmailValue(event.target.value);
+  }
+
   const submitHandler = () => {
+    setEmailValue("");
     wheelRef.current.spin(1000);
   }
 
@@ -80,7 +86,7 @@ const WheelSpinPage = () => {
         <Grid container justifyContent="center" alignItems="center" spacing={3}>
           <Grid item xs={6}>
             <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
-            <TextField /><Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
+            <TextField value={emailValue} onChange={handleTextChange}/><Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
           </Grid>
           <Grid item xs={6}>
             <Grid container justifyContent="center">
