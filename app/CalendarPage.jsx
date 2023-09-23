@@ -75,16 +75,15 @@ const CustomDiv = styled.div`
 
 `;
 
-const isFirstWednesday = (dateStr) => {
-  // console.log(JSON.stringify(dateStr))
-  let date = new Date(dateStr);
-  return date.getDay() === 3 && date.getDate() <= 7;
+const isFirstWednesday = (day) => {
+    let date = new Date(day);
+    return date.getDay() === 3 && date.getDate() <= 7;
 }
 
-const ServerDay = (props) => {
-  const { highlightedDays = [], day, outsideCurrentMonth, ...other } = props;
+const MeetupDay = (props) => {
+  const {day, outsideCurrentMonth, ...other } = props;
 
-  const isSelected = !props.outsideCurrentMonth && isFirstWednesday(props.day.date());
+  const isSelected = !props.outsideCurrentMonth && isFirstWednesday(day);
 
   return (
     <Badge
@@ -106,13 +105,12 @@ The goal of the calendar is to be able to click on dates and have a popup that s
 1. Perhaps the modal is actually seperate and is just passed the dates from a click event?
 *** 2. We also want to have the only badge be on the first wednesday of each month
         - onMonthChange has been added. Need to get this info to the day components to render badge
+        - Since there will be a default month, use that and onMonthChange to set badges
 3. Also need to change colors
 
 */
 
 const CalendarPage = () => {
-
-  const [highlightedDays, setHighlightedDays] = useState([11,20,9])
 
   return (
     <CustomDiv>
@@ -126,13 +124,7 @@ const CalendarPage = () => {
               <Paper>
                 <DateCalendar 
                   slots={{
-                    day: ServerDay
-                  }}
-                  onMonthChange={(month) => console.log(JSON.stringify(month))}
-                  slotProps={{
-                    day: {
-                      highlightedDays
-                    }
+                    day: MeetupDay
                   }}
                 />
               </Paper>
