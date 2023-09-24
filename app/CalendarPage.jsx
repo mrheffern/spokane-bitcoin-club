@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Box, Container, Grid, Paper, Typography, Badge } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
+import MeetupDetails from '@components/MeetupDetails';
 
 const SuiteAndBTCGraphic = (
 <svg width="485" height="372" viewBox="0 0 485 372" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,6 +77,9 @@ const CustomDiv = styled.div`
 `;
 
 const isFirstWednesday = (day) => {
+  // console.log(day);
+  // console.log(day instanceof Date);
+  // console.log(JSON.stringify(day));
     let date = new Date(day);
     return date.getDay() === 3 && date.getDate() <= 7;
 }
@@ -90,7 +94,7 @@ const MeetupDay = (props) => {
       key={props.day.toString()}
       variant='dot'
       color='secondary'
-      invisible={isSelected ? false : true}
+      invisible={!isSelected}
       overlap='circular'
     >
       <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
@@ -99,22 +103,33 @@ const MeetupDay = (props) => {
 }
 
 
+
 /*
 
 The goal of the calendar is to be able to click on dates and have a popup that shows our meetup details. 
-1. Perhaps the modal is actually seperate and is just passed the dates from a click event?
-*** 2. We also want to have the only badge be on the first wednesday of each month
-        - onMonthChange has been added. Need to get this info to the day components to render badge
-        - Since there will be a default month, use that and onMonthChange to set badges
+*** 1. Perhaps the modal is actually seperate and is just passed the dates from a click event?
 3. Also need to change colors
 
 */
 
 const CalendarPage = () => {
+  const [openMeetupDetails, setOpenMeetupDetails] = useState(false);
+
+  const closeMeetupDetails = () => {
+    setOpenMeetupDetails(false);
+  }
+
+  const checkToOpenDetails = (value, selectionState) => {
+    console.log("Test");
+    console.log(value);
+    console.log(isFirstWednesday(value));
+    isFirstWednesday(value) ? setOpenMeetupDetails(true) : null;
+  }
 
   return (
     <CustomDiv>
       <Container>
+        <MeetupDetails open={openMeetupDetails} onClose={closeMeetupDetails} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Box sx={{display: "flex", justifyContent: "center"}}>
@@ -126,6 +141,7 @@ const CalendarPage = () => {
                   slots={{
                     day: MeetupDay
                   }}
+                  onChange={checkToOpenDetails}
                 />
               </Paper>
             </Box>
