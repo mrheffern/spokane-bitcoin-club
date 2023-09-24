@@ -8,7 +8,7 @@ import WinningDialog from '@components/WinningDialog';
 
 const CustomDiv = styled.div`
     background-color: ${(props) => props.theme.palette.primary.main};
-    height: 140vh;
+    height: 900px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -49,12 +49,12 @@ const WheelSpinPage = () => {
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main },
         { label: '4 KSats', backgroundColor: '#f7931a' },
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main },
-        { label: '17 KSats', backgroundColor: '#f7931a'},
+        { label: '19 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
-        { label: '17 KSats', backgroundColor: theme.palette.secondary.main},
+        { label: '19 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'}

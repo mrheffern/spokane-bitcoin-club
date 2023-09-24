@@ -4,15 +4,15 @@ import React from 'react'
 
 const InfoCard = (props) => {
   return (
-    <Card sx={{height: 450}}>
+    <Card sx={{height: 500}}>
       <Container>
-        <Typography variant="h5" align='center' marginY={4}>{props.title}</Typography>
+        <Typography variant="h3" align='center' marginY={4}>{props.title}</Typography>
         <Box>
           <Box marginBottom={4} sx={{textAlign: 'center'}}>
             {props.picture} 
           </Box>
           <Box>
-            <Typography>{props.text}</Typography>
+            <Typography variant='h5'>{props.text}</Typography>
           </Box>
         </Box>
       </Container>
