@@ -107,29 +107,29 @@ const MeetupDay = (props) => {
 /*
 
 The goal of the calendar is to be able to click on dates and have a popup that shows our meetup details. 
-*** 1. Perhaps the modal is actually seperate and is just passed the dates from a click event?
 3. Also need to change colors
 
 */
 
 const CalendarPage = () => {
   const [openMeetupDetails, setOpenMeetupDetails] = useState(false);
+  const [selectedMeetupDate, setSelectedMeetupDate] = useState();
 
   const closeMeetupDetails = () => {
     setOpenMeetupDetails(false);
   }
 
   const checkToOpenDetails = (value, selectionState) => {
-    console.log("Test");
-    console.log(value);
-    console.log(isFirstWednesday(value));
-    isFirstWednesday(value) ? setOpenMeetupDetails(true) : null;
+    if (isFirstWednesday(value)) {
+      setSelectedMeetupDate(value);
+      setOpenMeetupDetails(true);
+    }
   }
 
   return (
     <CustomDiv>
       <Container>
-        <MeetupDetails open={openMeetupDetails} onClose={closeMeetupDetails} />
+        <MeetupDetails open={openMeetupDetails} onClose={closeMeetupDetails} date={selectedMeetupDate} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Box sx={{display: "flex", justifyContent: "center"}}>
