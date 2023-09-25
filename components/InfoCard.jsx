@@ -4,7 +4,7 @@ import React from 'react'
 
 const InfoCard = (props) => {
   return (
-    <Card sx={{height: 500}}>
+    <Card sx={{height: 550}}>
       <Container>
         <Typography variant="h3" align='center' marginY={4}>{props.title}</Typography>
         <Box>

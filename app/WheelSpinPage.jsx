@@ -85,8 +85,21 @@ const WheelSpinPage = () => {
         <WinningDialog open={openSpinResult} close={setOpenSpinResult} prizeAmount={wheelItems.items[winningIndex].label} />
         <Grid container justifyContent="center" alignItems="center" spacing={3}>
           <Grid item xs={6}>
-            <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
-            <TextField value={emailValue} onChange={handleTextChange}/><Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
+            <Grid container direction="column">
+              <Grid item>
+                <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
+              </Grid>
+              <Grid item>
+                <Grid container spacing={1} alignItems="center">
+                  <Grid item>
+                    <TextField label="Email" variant='filled' size='small' value={emailValue} onChange={handleTextChange}/> 
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={6}>
             <Grid container justifyContent="center">
