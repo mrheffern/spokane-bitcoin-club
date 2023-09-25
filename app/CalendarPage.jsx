@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from '@emotion/styled'
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Container, Grid, Paper, Typography, Badge } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { DateCalendar } from '@mui/x-date-pickers';
+import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
+import MeetupDetails from '@components/MeetupDetails';
 
 const SuiteAndBTCGraphic = (
 <svg width="485" height="372" viewBox="0 0 485 372" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,11 +76,60 @@ const CustomDiv = styled.div`
 
 `;
 
+const isFirstWednesday = (day) => {
+  // console.log(day);
+  // console.log(day instanceof Date);
+  // console.log(JSON.stringify(day));
+    let date = new Date(day);
+    return date.getDay() === 3 && date.getDate() <= 7;
+}
+
+const MeetupDay = (props) => {
+  const {day, outsideCurrentMonth, ...other } = props;
+
+  const isSelected = !props.outsideCurrentMonth && isFirstWednesday(day);
+
+  return (
+    <Badge
+      key={props.day.toString()}
+      variant='dot'
+      color='secondary'
+      invisible={!isSelected}
+      overlap='circular'
+    >
+      <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+    </Badge>
+  );
+}
+
+
+
+/*
+
+The goal of the calendar is to be able to click on dates and have a popup that shows our meetup details. 
+3. Also need to change colors
+
+*/
 
 const CalendarPage = () => {
+  const [openMeetupDetails, setOpenMeetupDetails] = useState(false);
+  const [selectedMeetupDate, setSelectedMeetupDate] = useState();
+
+  const closeMeetupDetails = () => {
+    setOpenMeetupDetails(false);
+  }
+
+  const checkToOpenDetails = (value, selectionState) => {
+    if (isFirstWednesday(value)) {
+      setSelectedMeetupDate(value);
+      setOpenMeetupDetails(true);
+    }
+  }
+
   return (
     <CustomDiv>
       <Container>
+        <MeetupDetails open={openMeetupDetails} onClose={closeMeetupDetails} date={selectedMeetupDate} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Box sx={{display: "flex", justifyContent: "center"}}>
@@ -87,7 +137,12 @@ const CalendarPage = () => {
             </Box>
             <Box>
               <Paper>
-                <DateCalendar />
+                <DateCalendar 
+                  slots={{
+                    day: MeetupDay
+                  }}
+                  onChange={checkToOpenDetails}
+                />
               </Paper>
             </Box>
             <Box>

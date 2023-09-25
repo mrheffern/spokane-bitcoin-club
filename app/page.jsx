@@ -1,6 +1,6 @@
 "use client"
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
-import { AppBar, Grid, ThemeProvider, Toolbar } from '@mui/material';
+import { AppBar, Grid, ThemeProvider, Toolbar, Typography } from '@mui/material';
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import theme from './theme';
@@ -35,14 +35,14 @@ const Home = () => {
         <div id='mainDiv'>
           <AppBar>
             <StyledToolbar>
-              Spokane Bitcoin Club
+              <Typography variant='h5'>Spokane Bitcoin Club</Typography>
             </StyledToolbar>
           </AppBar>
           <MainPage />
           <PerksPage />
           <WheelSpinPage />
           <CalendarPage />
-          <GraphPage />
+          {/* <GraphPage /> */}
           <BottomBar />
         </div>
       </LocalizationProvider>

@@ -8,7 +8,7 @@ import WinningDialog from '@components/WinningDialog';
 
 const CustomDiv = styled.div`
     background-color: ${(props) => props.theme.palette.primary.main};
-    height: 140vh;
+    height: 900px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -20,10 +20,16 @@ const WheelSpinPage = () => {
 
   const [openSpinResult, setOpenSpinResult] = useState(false);
   const [winningIndex, setWinningIndex] = useState(0);
+  const [emailValue, setEmailValue] = useState("");
 
   const wheelRef = useRef();
 
+  const handleTextChange = (event) => {
+    setEmailValue(event.target.value);
+  }
+
   const submitHandler = () => {
+    setEmailValue("");
     wheelRef.current.spin(1000);
   }
 
@@ -43,12 +49,12 @@ const WheelSpinPage = () => {
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main },
         { label: '4 KSats', backgroundColor: '#f7931a' },
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main },
-        { label: '17 KSats', backgroundColor: '#f7931a'},
+        { label: '19 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
-        { label: '17 KSats', backgroundColor: theme.palette.secondary.main},
+        { label: '19 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'},
         { label: '4 KSats', backgroundColor: theme.palette.secondary.main},
         { label: '4 KSats', backgroundColor: '#f7931a'}
@@ -79,8 +85,21 @@ const WheelSpinPage = () => {
         <WinningDialog open={openSpinResult} close={setOpenSpinResult} prizeAmount={wheelItems.items[winningIndex].label} />
         <Grid container justifyContent="center" alignItems="center" spacing={3}>
           <Grid item xs={6}>
-            <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
-            <TextField /><Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
+            <Grid container direction="column">
+              <Grid item>
+                <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
+              </Grid>
+              <Grid item>
+                <Grid container spacing={1} alignItems="center">
+                  <Grid item>
+                    <TextField label="Email" variant='filled' size='small' value={emailValue} onChange={handleTextChange}/> 
+                  </Grid>
+                  <Grid item>
+                    <Button variant="contained" color="secondary" onClick={submitHandler}>Submit and Spin!</Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={6}>
             <Grid container justifyContent="center">
