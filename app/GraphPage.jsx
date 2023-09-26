@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { Card, Grid, TextField, Typography, Box, Container } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LineChart, Line, XAxis, YAxis } from 'recharts';
+import { useState } from 'react';
 
 const bitcoinCSV = `Date,Price
 09/01/2023,26209.50
@@ -135,6 +136,13 @@ const CSVtoJSON = (csv) => {
   return monthlyPrices.reverse();
 }
 
+const selectPriceDates = (startDateStr, json) => {
+  let startDateObj = new Date(startDateStr);
+  let returnJson = json.filter(obj => new Date(obj.date) >= startDateObj);
+  console.log(returnJson);
+  return returnJson;
+}
+
 const BTCWorkers = (
 <svg width="587" height="221" viewBox="0 0 587 221" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_5_117)">
@@ -179,9 +187,13 @@ const CustomDiv = styled.div`
     width: 100%
 `;
 
-const data = CSVtoJSON(bitcoinCSV);
+
 
 const GraphPage = () => {
+  const [selectedDate, setSelectedDate] = useState();
+
+  const json = CSVtoJSON(bitcoinCSV);
+  const data = selectPriceDates(selectedDate, json);
 
   return (
     <CustomDiv>
@@ -195,7 +207,7 @@ const GraphPage = () => {
             <Box sx={{display: "flex", justifyContent: "center"}} marginBottom={5}>
               <Box marginRight={5}>
                 <Typography align="center" variant="body1">investment date</Typography>
-                <DatePicker />
+                <DatePicker value={selectedDate} onChange={(date) => {setSelectedDate(date)}}/>
               </Box>
               <Box>
                 <Typography align="center" variant="body1">amount</Typography>
