@@ -131,7 +131,7 @@ const CalendarPage = () => {
       <Container>
         <MeetupDetails open={openMeetupDetails} onClose={closeMeetupDetails} date={selectedMeetupDate} />
         <Grid container spacing={3}>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Box sx={{display: "flex", justifyContent: "center"}}>
               <Typography variant="h3">Calendar</Typography>
             </Box>
@@ -150,7 +150,7 @@ const CalendarPage = () => {
               <Typography variant="body1">Looking to buy bitcoin? Sell bitcoin? Buy goods and services with bitcoin? Come and meet up with us! Lets change our world one transaction at a time. </Typography>
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Box>
               <Typography variant="h4" marginTop={6} marginBottom={2}>Education</Typography>
               <Typography variant="body1" marginBottom={2}>Curious? Skeptical? Can’t get enough? We have monthly meetups where we teach people what BTC is, why it matters, and how it works. Let us show you how BTW can help YOU!</Typography>

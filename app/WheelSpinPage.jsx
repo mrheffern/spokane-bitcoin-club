@@ -79,12 +79,13 @@ const WheelSpinPage = () => {
     }
   }, []);
 
+  
   return (
     <CustomDiv>
       <Container>
         <WinningDialog open={openSpinResult} close={setOpenSpinResult} prizeAmount={wheelItems.items[winningIndex].label} />
         <Grid container justifyContent="center" alignItems="center" spacing={3}>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Grid container direction="column">
               <Grid item>
                 <h1>Join our mailing list to spin the wheel for a chance to win BTC!</h1>
@@ -101,7 +102,7 @@ const WheelSpinPage = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Grid container justifyContent="center">
               <div className='wheel-container' style={{height: 500, width: 500}} ref={containerRef}></div>
             </Grid>

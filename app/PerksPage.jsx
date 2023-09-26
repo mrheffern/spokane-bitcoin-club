@@ -41,13 +41,13 @@ sx<defs>
   return (
     <CustomDiv>
       <Grid container spacing={3} justifyContent="space-evenly">
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <InfoCard title={"Wealth"} picture={wealthCardPicture} text={"Bitcoin encourages saving and wealth building long-term. Bitcoin always has large increases in value in any 5-year period."} />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <InfoCard title={"Independence"} picture={independenceCardPicture} text={"Bitcoin allows those who have been historically discriminated against to control their own money- taking power back from banks."} />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item md={3}>
           <InfoCard title={"Security"} picture={securityCardPicture} text={"When communities build savings in safe assets that appreciate they become secure. They are no longer targets for monetary discrimination."} />
         </Grid>
       </Grid>

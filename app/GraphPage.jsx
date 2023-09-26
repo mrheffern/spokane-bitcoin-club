@@ -4,6 +4,136 @@ import { Card, Grid, TextField, Typography, Box, Container } from '@mui/material
 import { DatePicker } from '@mui/x-date-pickers';
 import { LineChart, Line, XAxis, YAxis } from 'recharts';
 
+const bitcoinCSV = `Date,Price
+09/01/2023,26209.50
+08/01/2023,25937.30
+07/01/2023,29232.40
+06/01/2023,30472.90
+05/01/2023,27216.10
+04/01/2023,29252.10
+03/01/2023,28473.70
+02/01/2023,23130.50
+01/01/2023,23125.10
+12/01/2022,16537.40
+11/01/2022,17163.90
+10/01/2022,20496.30
+09/01/2022,19423.00
+08/01/2022,20043.90
+07/01/2022,23303.40
+06/01/2022,19926.60
+05/01/2022,31793.40
+04/01/2022,37650.00
+03/01/2022,45525.00
+02/01/2022,43188.20
+01/01/2022,38498.60
+12/01/2021,46219.50
+11/01/2021,56882.90
+10/01/2021,61309.60
+09/01/2021,43823.30
+08/01/2021,47130.40
+07/01/2021,41553.70
+06/01/2021,35026.90
+05/01/2021,37298.60
+04/01/2021,57720.30
+03/01/2021,58763.70
+02/01/2021,45164.00
+01/01/2021,33108.10
+12/01/2020,28949.40
+11/01/2020,19698.10
+10/01/2020,13797.30
+09/01/2020,10776.10
+08/01/2020,11644.20
+07/01/2020,11333.40
+06/01/2020,9135.40
+05/01/2020,9454.80
+04/01/2020,8629.00
+03/01/2020,6412.50
+02/01/2020,8543.70
+01/01/2020,9349.10
+12/01/2019,7196.40
+11/01/2019,7546.60
+10/01/2019,9152.60
+09/01/2019,8284.30
+08/01/2019,9594.40
+07/01/2019,10082.00
+06/01/2019,10818.60
+05/01/2019,8558.30
+04/01/2019,5320.80
+03/01/2019,4102.30
+02/01/2019,3816.60
+01/01/2019,3437.20
+12/01/2018,3709.40
+11/01/2018,4039.70
+10/01/2018,6365.90
+09/01/2018,6635.20
+08/01/2018,7033.80
+07/01/2018,7729.40
+06/01/2018,6398.90
+05/01/2018,7502.60
+04/01/2018,9245.10
+03/01/2018,6938.20
+02/01/2018,10333.90
+01/01/2018,10265.40
+12/01/2017,13850.40
+11/01/2017,9946.80
+10/01/2017,6451.20
+09/01/2017,4360.60
+08/01/2017,4735.10
+07/01/2017,2883.30
+06/01/2017,2480.60
+05/01/2017,2303.30
+04/01/2017,1351.90
+03/01/2017,1079.10
+02/01/2017,1189.30
+01/01/2017,965.5
+12/01/2016,963.4
+11/01/2016,742.5
+10/01/2016,698.7
+09/01/2016,608.1
+08/01/2016,573.9
+07/01/2016,621.9
+06/01/2016,670
+05/01/2016,528.9
+04/01/2016,448.5
+03/01/2016,415.7
+02/01/2016,436.2
+01/01/2016,369.8
+12/01/2015,430
+11/01/2015,378
+10/01/2015,311.2
+09/01/2015,235.9
+08/01/2015,229.5
+07/01/2015,283.7
+06/01/2015,264.1
+05/01/2015,229.8
+04/01/2015,235.8
+03/01/2015,244.1
+02/01/2015,254.1
+01/01/2015,218.5
+12/01/2014,318.2
+11/01/2014,374.9
+10/01/2014,337.9
+09/01/2014,388.2
+08/01/2014,481.8
+07/01/2014,589.5
+06/01/2014,635.1
+05/01/2014,627.9
+04/01/2014,445.6
+03/01/2014,444.7
+02/01/2014,573.9`
+
+const CSVtoJSON = (csv) => {
+  let lines = csv.split('\n');
+  let monthlyPrices = [];
+
+  for (let x = 1; x < lines.length; x++) {
+    let values = lines[x].split(",");
+    let dataPointObj = {date: values[0], price: Number(values[1])}
+    monthlyPrices.push(dataPointObj);
+  }
+  console.log(JSON.stringify(monthlyPrices));
+  return monthlyPrices.reverse();
+}
 
 const BTCWorkers = (
 <svg width="587" height="221" viewBox="0 0 587 221" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,9 +179,10 @@ const CustomDiv = styled.div`
     width: 100%
 `;
 
-const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, {name: 'Page B', uv: 300, pv: 2400, amt: 2400}, {name: 'Page C', uv: 300, pv: 2400, amt: 2400}];
+const data = CSVtoJSON(bitcoinCSV);
 
 const GraphPage = () => {
+
   return (
     <CustomDiv>
       <Container>
@@ -59,7 +190,7 @@ const GraphPage = () => {
           <Typography marginTop={10} variant='h3'>How Much Would You Have Made?</Typography>
         </Box>
         <Grid container spacing={10}>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Typography align="center" variant='h6' marginY={3}>Pick a past date and an amount invested to see how much you could have made! Pick a past date and an amount invested to see how much you could have made!</Typography>
             <Box sx={{display: "flex", justifyContent: "center"}} marginBottom={5}>
               <Box marginRight={5}>
@@ -75,13 +206,13 @@ const GraphPage = () => {
               {BTCWorkers}
             </Box>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item md={6}>
             <Box marginTop={4}>
               <Card>
                 <Box sx={{display: 'flex', justifyContent: 'center', borderColor: 'black', borderStyle: 'solid'}}>
                   <LineChart margin={{top: 25, right: 50, bottom: 20, left: 0}} width={500} height={400} data={data}>
-                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                    <XAxis dataKey="name" />
+                    <Line type="monotone" dataKey="price" stroke="#8884d8" />
+                    <XAxis dataKey="date" />
                     <YAxis />
                   </LineChart>
                 </Box>

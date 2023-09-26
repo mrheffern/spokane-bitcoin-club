@@ -42,7 +42,7 @@ const Home = () => {
           <PerksPage />
           <WheelSpinPage />
           <CalendarPage />
-          {/* <GraphPage /> */}
+          <GraphPage />
           <BottomBar />
         </div>
       </LocalizationProvider>
