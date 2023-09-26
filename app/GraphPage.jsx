@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
 import { Card, Grid, TextField, Typography, Box, Container } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import { LineChart, Line, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
+import dayjs from 'dayjs';
 
 const bitcoinCSV = `Date,Price
 09/01/2023,26209.50
@@ -187,13 +188,20 @@ const CustomDiv = styled.div`
     width: 100%
 `;
 
+function formatDate(date) {
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const year = date.getFullYear();
 
+  return month + '/' + day + '/' + year;
+}
 
 const GraphPage = () => {
-  const [selectedDate, setSelectedDate] = useState();
+  const [selectedDate, setSelectedDate] = useState(dayjs("01/01/2014"));
 
   const json = CSVtoJSON(bitcoinCSV);
   const data = selectPriceDates(selectedDate, json);
+
 
   return (
     <CustomDiv>
