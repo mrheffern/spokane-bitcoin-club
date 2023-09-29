@@ -5,6 +5,7 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { LineChart, Line, XAxis, YAxis } from 'recharts';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import ProfitDisplay from '@components/ProfitDisplay';
 
 const bitcoinCSV = `Date,Price
 09/01/2023,26209.50
@@ -133,14 +134,14 @@ const CSVtoJSON = (csv) => {
     let dataPointObj = {date: values[0], price: Number(values[1])}
     monthlyPrices.push(dataPointObj);
   }
-  console.log(JSON.stringify(monthlyPrices));
+  // console.log(JSON.stringify(monthlyPrices));
   return monthlyPrices.reverse();
 }
 
 const selectPriceDates = (startDateStr, json) => {
   let startDateObj = new Date(startDateStr);
   let returnJson = json.filter(obj => new Date(obj.date) >= startDateObj);
-  console.log(returnJson);
+  // console.log(returnJson);
   return returnJson;
 }
 
@@ -196,12 +197,30 @@ function formatDate(date) {
   return month + '/' + day + '/' + year;
 }
 
+const calculateProfitPercent = (startDatePrice, endDatePrice) => {
+  const startPrice = startDatePrice.price;
+  const endPrice = endDatePrice.price;
+  console.log("start: " + startPrice);
+  console.log("end: " + endPrice);
+  return endPrice / startPrice;
+}
+
+const getProfit = (principle, percentChange) => {
+  if (principle === -1) {
+    return 0;
+  }
+  const profit = principle * percentChange;
+  console.log(profit);
+  return profit;
+}
+
 const GraphPage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs("01/01/2014"));
+  const [investmentAmount, setInvestmentAmount] = useState(0);
 
   const json = CSVtoJSON(bitcoinCSV);
   const data = selectPriceDates(selectedDate, json);
-
+  const profitPercent = calculateProfitPercent(data[0], data[data.length - 1]);
 
   return (
     <CustomDiv>
@@ -219,7 +238,7 @@ const GraphPage = () => {
               </Box>
               <Box>
                 <Typography align="center" variant="body1">amount</Typography>
-                <TextField />
+                <TextField value={investmentAmount} onChange={(event) => {setInvestmentAmount(event.target.value)}} />
               </Box>
             </Box>
             <Box sx={{display: "flex", justifyContent: "center"}}>
@@ -229,13 +248,18 @@ const GraphPage = () => {
           <Grid item md={6}>
             <Box marginTop={4}>
               <Card>
-                <Box sx={{display: 'flex', justifyContent: 'center', borderColor: 'black', borderStyle: 'solid'}}>
-                  <LineChart margin={{top: 25, right: 50, bottom: 20, left: 0}} width={500} height={400} data={data}>
-                    <Line type="monotone" dataKey="price" stroke="#8884d8" />
-                    <XAxis dataKey="date" />
-                    <YAxis />
-                  </LineChart>
-                </Box>
+                <Grid container direction="column" alignItems="center" style={{dborderColor: 'black', borderStyle: 'solid'}}>
+                  <Grid item>
+                    <ProfitDisplay profit={getProfit(investmentAmount, profitPercent)} />
+                  </Grid>
+                  <Grid item>
+                    <LineChart margin={{top: 25, right: 50, bottom: 20, left: 0}} width={500} height={400} data={data}>
+                      <Line type="monotone" dataKey="price" stroke="#8884d8" />
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                    </LineChart>
+                  </Grid>
+                </Grid>
               </Card>
             </Box>
           </Grid>

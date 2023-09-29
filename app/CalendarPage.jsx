@@ -153,7 +153,7 @@ const CalendarPage = () => {
           <Grid item md={6}>
             <Box>
               <Typography variant="h4" marginTop={6} marginBottom={2}>Education</Typography>
-              <Typography variant="body1" marginBottom={2}>Curious? Skeptical? Can’t get enough? We have monthly meetups where we teach people what BTC is, why it matters, and how it works. Let us show you how BTW can help YOU!</Typography>
+              <Typography variant="body1" marginBottom={2}>Curious? Skeptical? Can’t get enough? We have monthly meetups where we teach people what BTC is, why it matters, and how it works. Let us show you how BTC can help YOU!</Typography>
             </Box>
             <Box>
             <Typography variant="h4" marginBottom={2}>Socialize</Typography>
